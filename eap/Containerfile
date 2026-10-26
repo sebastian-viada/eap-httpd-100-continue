@@ -1,0 +1,20 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest AS build
+ENV EAP_VERSION=8.1
+
+COPY jboss-eap-${EAP_VERSION}.0.zip /tmp
+RUN dnf install -y unzip
+RUN mkdir -p /opt
+RUN unzip -q /tmp/jboss-eap-${EAP_VERSION}.0.zip -d /opt/ && mv /opt/jboss-eap-${EAP_VERSION} /opt/jboss && rm /tmp/jboss-eap-${EAP_VERSION}.0.zip
+COPY hellosleepyworld.war /opt/jboss/standalone/deployments/
+
+FROM registry.access.redhat.com/ubi9/openjdk-21:latest
+USER root
+RUN groupadd -r jboss && useradd -r -g jboss jboss
+RUN mkdir -p /opt/jboss
+COPY --from=build --chown=jboss:jboss /opt/jboss /opt/jboss
+COPY config.cli /tmp/
+RUN /opt/jboss/bin/jboss-cli.sh --file=/tmp/config.cli --echo-command && rm /tmp/config.cli
+EXPOSE 8080 8443
+RUN chown -R jboss:jboss /opt/jboss
+USER jboss
+CMD /opt/jboss/bin/standalone.sh -b "0.0.0.0"

@@ -1,0 +1,20 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest
+RUN dnf install -y yajl unzip brotli jansson mailcap krb5-workstation hostname coreutils iproute iputils libxcrypt-compat --allowerasing && dnf clean all
+RUN mkdir -p /opt/jbcs
+
+ENV PACKAGENAME=jbcs-httpd24-httpd-2.4.62-RHEL9-x86_64
+ENV ZIPNAME=${PACKAGENAME}.zip
+COPY ${ZIPNAME} /tmp
+RUN unzip -q /tmp/${ZIPNAME} -d /opt/jbcs/  && rm /tmp/${ZIPNAME}
+
+COPY mod_proxy_cluster.conf /opt/jbcs/jbcs-httpd24-2.4/httpd/conf.d/
+COPY httpd.conf /opt/jbcs/jbcs-httpd24-2.4/httpd/conf/
+
+RUN cd /opt/jbcs/jbcs-httpd24-2.4/httpd &&  ./.postinstall
+
+EXPOSE 80
+
+ENTRYPOINT /opt/jbcs/jbcs-httpd24-2.4/httpd/sbin/apachectl start \
+; cat /opt/jbcs/jbcs-httpd24-2.4/httpd/logs/httpd.log \
+&& tail -f /opt/jbcs/jbcs-httpd24-2.4/httpd/logs/access_log
+

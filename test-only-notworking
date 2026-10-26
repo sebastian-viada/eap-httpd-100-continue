@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo -e "\n\n\nDoes not work with default config:"
+echo "curl -v -H 'Expect: 100-continue' localhost:8080/default"
+curl -v -H 'Expect: 100-continue' localhost:8080/default
+
+echo ""

@@ -1,0 +1,27 @@
+embed-server
+history --disable
+/system-property=jboss.config.current-history-length:add(value=0
+
+/system-property=jboss.default.multicast.address:add(value="[ff08:1234:5678:9abc:0:0:e664:06c7]"
+
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=apache1:add(host=web, port=6666
+
+/extension=org.jboss.as.modcluster:add
+/subsystem=modcluster:add
+
+/subsystem=modcluster/proxy=default:add(listener=default
+/subsystem=modcluster/proxy=default:write-attribute(name=proxies,value=[apache1]
+/subsystem=modcluster/proxy=default:write-attribute(name=balancer,value=jboss-cluster
+/subsystem=modcluster/proxy=default:write-attribute(name=auto-enable-contexts,value=true
+/subsystem=modcluster/proxy=default:write-attribute(name=advertise,value=false
+/subsystem=modcluster/proxy=default:write-attribute(name=status-interval, value=20)
+
+/subsystem=undertow/configuration=filter/expression-filter=continue:add(expression=http-continue-accept
+/subsystem=undertow/server=default-server/host=default-host/filter-ref=continue:add
+
+/subsystem=ee:write-attribute(name=jboss-descriptor-property-replacement,value=true
+/system-property=default-context:add(value=working)
+
+
+stop-embedded-server
+

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<jboss-web>
+	<context-root>${default-context:/}</context-root>
+</jboss-web>
