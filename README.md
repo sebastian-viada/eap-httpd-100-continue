@@ -1,4 +1,4 @@
-# Testcase for 100-continue Modcluster EAP8 problem
+# Testcase for 100-continue mod_proxy_cluster EAP8 problem
 This was already discribed in [RedHat Solution 3170471](https://access.redhat.com/solutions/3170471).
 But it is not limited to EAP6+EAP7 the problem persists in EAP8.
 And it is not limited to HTTP-POST, all methods affected.
