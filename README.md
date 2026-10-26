@@ -9,7 +9,7 @@ You need to provide EAP8 installation zip file and jbcs-httpd24 zip file as disc
 # Run
 `podman kube play eap-apache.yml`
 
-Wait a moment so eap nodes register to apache
+Wait a moment so eap nodes register to apache.
 
 
 # Execute test
