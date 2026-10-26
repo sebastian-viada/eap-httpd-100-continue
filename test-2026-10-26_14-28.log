@@ -1,0 +1,109 @@
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /default HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.12.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Date: Mon, 26 Oct 2026 13:28:15 GMT
+< Server: Apache/2.4.62 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_cluster/1.3.22.Final
+< Content-Type: application/octet-stream
+< Content-Length: 12
+< 
+{ [12 bytes data]
+* Connection #0 to host localhost left intact
+Hello World!
+
+
+curl -vs localhost:8080/working
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /working HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.12.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Date: Mon, 26 Oct 2026 13:28:26 GMT
+< Server: Apache/2.4.62 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_cluster/1.3.22.Final
+< Content-Type: application/octet-stream
+< Content-Length: 12
+< 
+{ [12 bytes data]
+* Connection #0 to host localhost left intact
+Hello World!
+
+
+Does not work with default config:
+curl -vs -H 'Expect: 100-continue' localhost:8080/default
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /default HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.12.1
+> Accept: */*
+> Expect: 100-continue
+> 
+* Request completely sent off
+< HTTP/1.1 503 Proxy Error
+< Date: Mon, 26 Oct 2026 13:28:26 GMT
+< Server: Apache/2.4.62 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_cluster/1.3.22.Final
+< Content-Length: 283
+< Connection: close
+< Content-Type: text/html; charset=iso-8859-1
+< 
+{ [283 bytes data]
+* shutting down connection #0
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>503 Proxy Error</title>
+</head><body>
+<h1>Proxy Error</h1>
+<p>The server is temporarily unable to service your
+request due to maintenance downtime or capacity
+problems. Please try again later.</p>
+</body></html>
+
+
+
+Works with 100-continue-filter:
+curl -vs -H 'Expect: 100-continue' localhost:8080/working
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /working HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.12.1
+> Accept: */*
+> Expect: 100-continue
+> 
+* Request completely sent off
+< HTTP/1.1 100 Continue
+< 
+< HTTP/1.1 200 OK
+< Date: Mon, 26 Oct 2026 13:28:47 GMT
+< Server: Apache/2.4.62 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_cluster/1.3.22.Final
+< Content-Type: application/octet-stream
+< Content-Length: 12
+< 
+{ [12 bytes data]
+* Connection #0 to host localhost left intact
+Hello World!
