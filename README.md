@@ -3,7 +3,7 @@ This was already discribed in [RedHat Solution 3170471](https://access.redhat.co
 But it is not limited to EAP6+EAP7 the problem persists in EAP8.
 And it is not limited to HTTP-POST, all methods affected.
 
-So if you use JBCS with mod_proxy_cluster + EAP8. The default configuration doesn't go hand in hand. Although the handler is implemented in Undertow EAP8 does not activate it by default.
+So if you use JBCS with mod_proxy_cluster + EAP8. The default configurations of each product wont go hand in hand. Although the handler is implemented in Undertow EAP8 does not activate it by default.
 
 
 
