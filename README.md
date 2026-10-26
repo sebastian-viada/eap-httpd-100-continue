@@ -9,7 +9,7 @@ So if you use JBCS with mod_proxy_cluster + EAP8. The default configurations of 
 
 # Prepare: 
 You need a working installation of `openjdk-21`, `mvn` and `podman`.
-You need to provide EAP8 installation zip file and jbcs-httpd24 zip file as discribed in /eap and /web
+You need to provide EAP8 installation zip file and jbcs-httpd24 zip file as discribed in [jboss-eap-8.1.0.zip.README](./eap/jboss-eap-8.1.0.zip.README) and [jbcs-httpd24-httpd-2.4.62-RHEL9-x86_64.zip.README](./web/jbcs-httpd24-httpd-2.4.62-RHEL9-x86_64.zip.README).
 
 `./podman-build.sh`
 
