@@ -21,6 +21,7 @@ Wait a moment so eap nodes register to apache.
 
 # Execute test
 `./test.sh`
+See logfile, one logfile is already included.
 
 # Clean
 `./clean.sh`
