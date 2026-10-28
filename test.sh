@@ -2,9 +2,9 @@
 FILE="test-$(date '+%Y-%m-%d_%H-%M').log"
 echo "Piping to $FILE"
 
-echo -e "Simply works:\n" >> $FILE 2>&1
+echo -e "Simply works:\n" > $FILE 2>&1
 echo "curl -vs localhost:8080/default" >> $FILE
-curl -vs localhost:8080/default > $FILE 2>&1
+curl -vs localhost:8080/default >> $FILE 2>&1
 
 echo -e "\n\n\ncurl -vs localhost:8080/working" >> $FILE
 curl -vs localhost:8080/working >> $FILE 2>&1
