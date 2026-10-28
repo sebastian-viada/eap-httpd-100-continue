@@ -1,10 +1,18 @@
 # Testcase for 100-continue mod_proxy_cluster EAP8 problem
-This was already discribed in [RedHat Solution 3170471](https://access.redhat.com/solutions/3170471).
+This was already described in [RedHat Solution 3170471](https://access.redhat.com/solutions/3170471).
 But it is not limited to EAP6+EAP7 the problem persists in EAP8.
 And it is not limited to HTTP-POST, all methods are affected.
 
 If you use JBCS with mod_proxy_cluster + EAP8. The default configurations of each product won't go hand in hand. Although the handler is implemented in Undertow EAP8 does not activate it by default.
 So if your backend needs longer that 10s to send the response, you get a response with return code HTTP 503 from apache.
+
+This application exposes following endpoints:
+- `localhost:8080/working`
+- `localhost:8080/default`
+
+Only the working endpoint activates the 100-continue filter in undertow. If the server uses the default configuration you receive HTTP 503 when using request header `Expect: 100-continue`. The HTTP method used and request size are irrelevant.
+
+Alternative solution is to activate `Proxy100Continue Off` in apache config.
 
 # Prepare: 
 You need a working installation of `openjdk-21`, `mvn` and `podman`.
