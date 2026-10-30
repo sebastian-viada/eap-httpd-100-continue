@@ -1,3 +1,5 @@
+Simply works:
+curl -vs localhost:8080/default
 * Host localhost:8080 was resolved.
 * IPv6: ::1
 * IPv4: 127.0.0.1
