@@ -30,6 +30,7 @@ Wait a moment so eap nodes register to apache.
 `./test.sh`
 
 Duration is about 45 seconds.
+
 See logfile, one logfile is already included.
 
 # Clean
